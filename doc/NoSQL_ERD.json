@@ -1,0 +1,180 @@
+[
+  {
+    "dept_name": "IT",
+    "jobs": [
+      {
+        "job_name": "Test Job 1000",
+        "job_priority": 1,
+        "priority_name": "high",
+        "sla_time": 15,
+        "users": [
+          {
+            "user_name": "Alice",
+            "user_email": "alice@newco.com",
+            "user_phone": "2125551212",
+            "admin": false,
+            "password": "alice123",
+            "response_order": 1
+          },
+          {
+            "user_name": "Jack",
+            "user_email": "jack@newco.com",
+            "user_phone": "2125551212",
+            "admin": false,
+            "password": "jack123",
+            "response_order": 2
+          },
+          {
+            "user_name": "Jane",
+            "user_email": "jane@newco.com",
+            "user_phone": "2125551212",
+            "admin": true,
+            "password": "jane123",
+            "response_order": 3
+          }
+        ]
+      },
+      {
+        "job_name": "Test Job 1001",
+        "job_priority": 2,
+        "priority_name": "medium",
+        "sla_time": 75,
+        "users": [
+          {
+            "user_name": "Alice",
+            "user_email": "alice@newco.com",
+            "user_phone": "2125551212",
+            "admin": false,
+            "password": "alice123",
+            "response_order": 1
+          },
+          {
+            "user_name": "Jane",
+            "user_email": "jane@newco.com",
+            "user_phone": "2125551212",
+            "admin": true,
+            "password": "jane123",
+            "response_order": 3
+          }
+        ]
+      },
+      {
+        "job_name": "Test Job 1003",
+        "job_priority": 3,
+        "priority_name": "low",
+        "sla_time": 210,
+        "users": [
+          {
+            "user_name": "Alice",
+            "user_email": "alice@newco.com",
+            "user_phone": "2125551212",
+            "admin": false,
+            "password": "alice123",
+            "response_order": 1
+          },
+          {
+            "user_name": "Jack",
+            "user_email": "jack@newco.com",
+            "user_phone": "2125551212",
+            "admin": false,
+            "password": "jack123",
+            "response_order": 2
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "dept_name": "SUPPORT",
+    "jobs": [
+      {
+        "job_name": "Test Job 1004",
+        "job_priority": 1,
+        "priority_name": "high",
+        "sla_time": 5,
+        "users": [
+          {
+            "user_name": "Ted",
+            "user_email": "ted@newco.com",
+            "user_phone": "2125551212",
+            "admin": false,
+            "password": "ted123",
+            "response_order": 1
+          },
+          {
+            "user_name": "Sue",
+            "user_email": "sue@newco.com",
+            "user_phone": "2125551212",
+            "admin": false,
+            "password": "sue123",
+            "response_order": 2
+          },
+          {
+            "user_name": "Jill",
+            "user_email": "jill@newco.com",
+            "user_phone": "2125551212",
+            "admin": true,
+            "password": "jill123",
+            "response_order": 3
+          }
+        ]
+      },
+      {
+        "job_name": "Test Job 1005",
+        "job_priority": 2,
+        "priority_name": "medium",
+        "sla_time": 60,
+        "users": [
+          {
+            "user_name": "Ted",
+            "user_email": "ted@newco.com",
+            "user_phone": "2125551212",
+            "admin": false,
+            "password": "ted123",
+            "response_order": 1
+          },
+          {
+            "user_name": "Jill",
+            "user_email": "jill@newco.com",
+            "user_phone": "2125551212",
+            "admin": true,
+            "password": "jill123",
+            "response_order": 1
+          }
+        ]
+      },
+      {
+        "job_id": 1006,
+        "job_name": "Test Job 1006",
+        "job_priority": 3,
+        "priority_name": "low",
+        "users": [
+          {
+            "user_name": "Ted",
+            "user_email": "ted@newco.com",
+            "user_phone": "2125551212",
+            "admin": false,
+            "password": "ted123",
+            "response_order": 1
+          },
+          {
+            "user_name": "Sue",
+            "user_email": "sue@newco.com",
+            "user_phone": "2125551212",
+            "admin": false,
+            "password": "sue123",
+            "response_order": 2
+          },
+          {
+            "user_name": "Jill",
+            "user_email": "jill@newco.com",
+            "user_phone": "2125551212",
+            "admin": true,
+            "password": "jill123",
+            "response_order": 3
+          }
+        ]
+      }
+    ]
+  }
+]

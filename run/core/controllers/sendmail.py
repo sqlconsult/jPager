@@ -1,6 +1,7 @@
-from datetime import datetime
+import datetime
 import smtplib
 import outlook
+import re
 
 email_id = 'byte_student@outlook.com'
 email_pwd = 'Byte1234'
@@ -78,19 +79,30 @@ def convert_to_date(inp_dt):
     months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec']
     date_parts = inp_dt.split()
     day_num = date_parts[1]
-    month_str = date_parts[2].toLower()
+    month_str = date_parts[2].lower()
     month = months.index(month_str) + 1
 
     year = date_parts[3]
     time = date_parts[4]
-    offset = date_parts[5][1::]
+    offset = float(date_parts[5][1::]) * 0.01
     sign = date_parts[5][0]
 
-    time_str = '{year}-{month}-{day_num}T{time}{sign}{offset}'.\
-        format(year=year, month=month, day_num=day_num, time=time, sign=sign, offset=offset )
+    utc_offset = offset if sign == '+' else -1 * offset
 
-    print('time_str:', time_str)
-    utc_dt = datetime.strptime(time_str, '%Y-%m-%dT%H:%M:%S%z')
+    # time_str = '{year}-{month}-{day_num}T{time}{sign}{offset}'.\
+    #    format(year=year, month=month, day_num=day_num, time=time, sign=sign, offset=offset )
+
+    time_str = '{year}-{month}-{day_num}T{time}'.\
+        format(year=year, month=month, day_num=day_num, time=time)
+
+    # print('time_str:', time_str, 'utc_offset:', utc_offset)
+
+    base_dt = datetime.datetime.strptime(time_str, '%Y-%m-%dT%H:%M:%S')
+
+    # print('base_dt:', base_dt)
+
+    utc_dt = base_dt + datetime.timedelta(hours=utc_offset)
+
     return utc_dt
 
 
@@ -109,13 +121,21 @@ if __name__ == '__main__':
         test_dt = datetime.date(2018, 3, 8)
         msgs = read_after_date(test_dt)
         for m1 in msgs:
-            print(50*'=')
-            print('Subject:', m1.mail_subject)
+            # only look at messages with the word 'failed' in the subject line
+            if 'failed' in m1.mail_subject.lower():
+                # must also have Job # (up to 10 digits)
+                regex = '^Job d{0,10}.*$'
 
-            print('   From:', m1.mail_from)
-            print('     To:', m1.mail_to)
-            print('   Date:', m1.mail_datetime)
-            print('        ', convert_to_date(m1.mail_datetime))
+                if re.match(regex, m1.mail_subject):
+                # if True:
+                    msg_dt = convert_to_date(m1.mail_datetime)
+                    print(50*'=')
+                    print('Subject:', m1.mail_subject)
+
+                    print('   From:', m1.mail_from)
+                    print('     To:', m1.mail_to)
+                    print('   Date:', m1.mail_datetime)
+                    print('        ', msg_dt)
 
     else:
         print('Credential check failed!')

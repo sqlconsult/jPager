@@ -1,3 +1,9 @@
+#!/usr/bin/env python3
+
+#
+# TODO: Implement logging in place of print (line 57)
+#
+
 import email
 import imaplib
 import smtplib
@@ -5,7 +11,7 @@ import datetime
 import email.mime.multipart
 import base64
 
-import outlook_config as config
+import wrapper.outlook_config as config
 
 
 #########################################################################

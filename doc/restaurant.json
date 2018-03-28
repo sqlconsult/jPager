@@ -1,0 +1,38 @@
+[
+{
+    "address": {"building": "351", 
+                "coord": [-73.98513559999999, 40.7676919], 
+                "street": "West   57 Street", 
+                "zipcode": "10019"}, 
+    "borough": "Manhattan", 
+    "cuisine": "Irish", 
+    "grades": [ { "date": {"$date": 1409961600000}, 
+                           "grade": "A", "score": 2 }, 
+                { "date": {"$date": 1374451200000}, 
+                           "grade": "A", "score": 11 },
+                { "date": {"$date": 1343692800000}, 
+                           "grade": "A", "score": 12},
+                { "date": {"$date": 1325116800000},
+                           "grade": "A", "score": 12} ], 
+    "name": "Dj Reynolds Pub And Restaurant", 
+    "restaurant_id": "30191841"
+},
+{
+    "address": {"building": "2780", 
+                "coord": [-73.98241999999999, 40.579505], 
+                "street": "Stillwell Avenue", 
+                "zipcode": "11224"}, 
+    "borough": "Brooklyn", 
+    "cuisine": "American", 
+    "grades": [ { "date": {"$date": 1402358400000}, 
+                           "grade": "A", "score": 5}, 
+                { "date": {"$date": 1370390400000}, 
+                           "grade": "A", "score": 7}, 
+                { "date": {"$date": 1334275200000}, 
+                           "grade": "A", "score": 12}, 
+                { "date": {"$date": 1318377600000}, 
+                           "grade": "A", "score": 12}], 
+    "name": "Riviera Caterer", 
+    "restaurant_id": "40356018"
+}
+]

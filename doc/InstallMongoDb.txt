@@ -1,0 +1,54 @@
+
+https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/
+
+1 - Install MongoDb
+    a - Import the public key used by the package management system
+        sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2930ADAE8CAF5059EE73BB4B58712A2291FA4AD5
+
+    b - Create a list file for MongoDB
+        echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu xenial/mongodb-org/3.6 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.6.list        
+
+    c - Reload local package database
+        sudo apt-get update
+
+    d - Install the MongoDB packages
+        sudo apt-get install -y mongodb-org
+
+    e - Install a specific release of MongoDB
+        sudo apt-get install -y mongodb-org=3.6.3
+
+2 - Start MongoDb
+    sudo service mongod start
+
+3 - Verify that MongoDB has started successfully
+    Check the contents of the log file at /var/log/mongodb/mongod.log
+    for a line reading:
+
+    [initandlisten] waiting for connections on port 27017
+
+4 - Stop & Restart MongoDB
+    sudo service mongod stop
+    sudo service mongod restart
+
+5 - Start using mongo
+    mongo --host 127.0.0.1:27017
+
+
+
+
+https://docs.mongodb.com/getting-started/shell/
+
+1 - Get sample dataset
+    curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET https://raw.githubusercontent.com/mongodb/docs-assets/primer-dataset/primer-dataset.json > primer-dataset.json
+
+2 - Remove curl header info from file
+    sed '1,25d' <primer-dataset.json >dataset.json
+
+
+3 - Import sampel dataset
+    mongoimport --db test --collection restaurants --drop --file ~/downloads/dataset.json
+
+
+
+ssh root@159.203.74.232
+db.restaurants.find().sort({_id:1}).limit(2).pretty();

@@ -16,11 +16,14 @@ def delete_all(db, db_name):
     return db
 
 
-def import_ref_data(inp_file_path, client):
+def import_ref_data(inp_file_path, params):
+    # connect to mongodb on digital ocean droplet
+    ref_db_name = params[0]['Mongo']['ref_db_name']
+    client = open_connection(params, ref_db_name)
+
     # clear jPager reference database
-    db_name = 'jPager'
-    db = client[db_name]
-    delete_all(db, db_name)
+    db = client[ref_db_name]
+    delete_all(db, ref_db_name)
 
     # populate jPager reference database
     with open(inp_file_path) as f:
@@ -29,16 +32,24 @@ def import_ref_data(inp_file_path, client):
         # print(80*'=')
         # print(rows)
         # print(80*'=')
-        db['jPager'].insert_many(rows)
+        db[ref_db_name].insert_many(rows)
+        ins_count = db[ref_db_name].count()
+        print('Seed.import_ref_data: {0} ref data rows inserted from {1}'.
+              format(ins_count, inp_file_path))
+
+    client.close()
 
     return True
 
 
-def init_transactions(inp_file_path, client):
+def init_transactions(inp_file_path, params):
+    # connect to mongodb on digital ocean droplet
+    alert_db_name = params[0]['Mongo']['alert_db_name']
+    client = open_connection(params, alert_db_name)
+
     # clear jPager transaction database
-    db_name = 'jPager_xcn'
-    db = client[db_name]
-    delete_all(db, db_name)
+    db = client[alert_db_name]
+    delete_all(db, alert_db_name)
 
     # genesis entry
     seed_list = [{
@@ -77,8 +88,12 @@ def init_transactions(inp_file_path, client):
 
             seed_list.append(new_dict)
 
-    db[db_name].insert_many(seed_list)
+    db[alert_db_name].insert_many(seed_list)
+    ins_count = db[alert_db_name].count()
+    print('Seed.init_transactions: {0} ref data rows inserted from {1}'.
+          format(ins_count, inp_file_path))
 
+    client.close()
     return True
 
 
@@ -87,14 +102,14 @@ def main():
     seed_tables(seed_data_paths)
 
 
-def open_connection(params):
+def open_connection(params, db_name):
     # connect to MongoDb
     conn_str = 'mongodb://{user_name}:{password}@{ip_address}:{port}/{db_name}'.\
         format(user_name=params[0]['Mongo']['user_name'],
                password=params[0]['Mongo']['password'],
                ip_address=params[0]['Mongo']['ip_address'],
                port=params[0]['Mongo']['port'],
-               db_name=params[0]['Mongo']['db_name'])
+               db_name=db_name)
     print('Connection string:', conn_str)
     # client = pymongo.MongoClient('mongodb://test_admin:admin@159.203.74.232:27017/test')
     client = pymongo.MongoClient(conn_str)
@@ -104,22 +119,17 @@ def open_connection(params):
 def seed_tables(seed_data_paths):
     # json_data = {}
     # json.dump(json_data, outfile, sort_keys=True, indent=4, ensure_ascii=False)
+    # client.database_names()
     print('Read json parameters')
     with open('../params.json', 'r') as handle:
         json_params = json.load(handle)
 
-    # connect to mongodb on digital ocean droplet
-    print('Open connection')
-    client = open_connection(json_params)
-    # client.database_names()
-
     print('Import reference data')
-    import_ref_data(seed_data_paths[0], client)
+    import_ref_data(seed_data_paths[0], json_params)
 
     print('Seed initial transaction')
-    init_transactions(seed_data_paths[1], client)
+    init_transactions(seed_data_paths[1], json_params)
 
-    client.close()
     return True
 
 

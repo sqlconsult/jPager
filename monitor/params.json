@@ -1,19 +1,21 @@
 
 [
   {
+    "DataChain": "DataChain.json",
     "LastTimeChecked": "3/1/2018 00:00:01",
     "MailBoxToMonitor": "byte_maint@outlook.com",
     "MailBoxPassword": "Byte1234",
     "MessageSubject": "Job d{0:10}.*$",
-    "Quit": "False",
-    "WaitTime": 60,
     "Mongo": {
       "user_name": "test_admin",
       "password": "admin",
       "ip_address": "159.203.74.232",
       "port": "27017",
-      "db_name": "jPager"
-    }
+      "alert_db_name": "jPager_xcn",
+      "ref_db_name": "jPager"
+    },
+    "Quit": "False",
+    "WaitTime": 60
   }
 ]
 

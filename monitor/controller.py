@@ -1,10 +1,24 @@
 #!/usr/bin/env python3
 import json
 import logging
+import os
+import pprint
 
 import run.model as model
 import wrapper.logger as logger
 import wrapper.sendmail as sendmail
+import wrapper.blockchain as bc
+
+
+def check_credentials(params, module_logger):
+    # check mailbox to monitor credentials
+    email_id = params[0]['MailBoxToMonitor']    # mailbox =_maint@outlook.com
+    email_pwd = params[0]['MailBoxPassword']    # pwd = Byte1234
+    return_status = sendmail.check_credentials(email_id, email_pwd)
+    if not return_status:
+        module_logger.error('Failed credential check for {mbx}'.format(mbx=email_id))
+        return False
+    return True
 
 
 def main():
@@ -16,13 +30,11 @@ def main():
     module_logger.info('===== Starting =====')
 
     # Get and log input parameters
-    module_logger.info('Parameters:')
     params = read_params()
-
+    module_logger.info('Parameters:')
     module_logger.info(json.dumps(params, indent=4, sort_keys=True))
 
     return_status = monitor_loop(params, module_logger)
-    return_status = True
 
     if return_status:
         module_logger.info('Successful')
@@ -33,19 +45,41 @@ def main():
 
 
 def monitor_loop(params, module_logger):
-    # check mailbox to monitor credentials
-    email_id = params[0]['MailBoxToMonitor']    # mailbox =_maint@outlook.com
-    email_pwd = params[0]['MailBoxPassword']    # pwd = Byte1234
-    return_status = sendmail.check_credentials(email_id, email_pwd)
-    if not return_status:
-        module_logger.error('Failed credential check for {mbx}'.format(mbx=email_id))
-        return False
+    # if not check_credentials(params, module_logger):
+    #     return False
 
-    # read existing open transactions from block chain / mongo database (transactions)
-    existing_alerts = model.get_existing_alerts(params)
+    # Instantiate our Block chain including a genesis block
+    # print('monitor_loop', params[0]['DataChain'])
+    # print('monitor_loop', os.getcwd())
+    block_chain = bc.BlockChain(params, module_logger)
 
-    module_logger.info('monitor_loop: Retrieved {0} open alerts'.
-                       format(len(existing_alerts)))
+    response = block_chain.full_chain()
+    alerts = response['chain']
+
+    # print(response['length'])
+    # print(type(alerts))
+    # print(alerts)
+
+    # read block chain alerts and leave only open alerts in a dictionary
+    #     str_dt = datetime.datetime.strftime(alert['notification_dt'], '%Y%m%d_%H%M%S')
+    #         key = '{0}~{1}~{2}~{3}'.\
+    #             format(alert['job_name'], alert['email_from'], alert['response_order'], str_dt)
+    open_alerts = model.get_existing_open_alerts(alerts, module_logger)
+    module_logger.info('monitor_loop: Retrieved {0} open alerts'.format(len(open_alerts)))
+
+    pp = pprint.PrettyPrinter(indent=4)
+    s = pp.pformat(open_alerts)
+    print('{0}'.format(s))
+
+    ref_data = model.get_ref_data(params)
+    module_logger.info('monitor_loop: Retrieved {0} reference data records'.format(len(ref_data)))
+
+    # pp = pprint.PrettyPrinter(indent=4)
+    # s = pp.pformat(ref_data)
+    # module_logger.info('monitor_loop:{0}'.format(s))
+
+    # TODO model.escalate_job_alerts(open_alerts, ref_data, params)
+
     return True
 
 

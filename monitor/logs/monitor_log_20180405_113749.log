@@ -1,0 +1,29 @@
+2018-04-05 11:37:49.206 - controller.controller - INFO - ===== Starting =====
+2018-04-05 11:37:49.206 - controller.controller - INFO - Parameters:
+2018-04-05 11:37:49.206 - controller.controller - INFO - [
+    {
+        "DataChain": "DataChain.json",
+        "LastTimeChecked": "3/1/2018 00:00:01",
+        "MailBoxPassword": "Byte1234",
+        "MailBoxToMonitor": "byte_maint@outlook.com",
+        "MessageSubject": "Job d{0:10}.*$",
+        "Mongo": {
+            "alert_db_name": "jPager_xcn",
+            "ip_address": "159.203.74.232",
+            "password": "admin",
+            "port": "27017",
+            "ref_db_name": "jPager",
+            "user_name": "test_admin"
+        },
+        "Quit": "False",
+        "WaitTime": 60
+    }
+]
+2018-04-05 11:37:49.207 - controller.controller - INFO - model.get_existing_open_alerts: 1 of 6 alerts is still open
+2018-04-05 11:37:49.439 - controller.controller - INFO - monitor_loop: Retrieved 13 reference data records
+2018-04-05 11:37:49.440 - controller.controller - INFO - Sent email to byte_ic@outlook.com regarding Test Job 1000 Failed
+2018-04-05 11:37:49.440 - controller.controller - INFO - Sent email to byte_mgr@outlookcom regarding Test Job 1000 Failed
+2018-04-05 11:37:49.440 - controller.controller - INFO - Sent email to byte_dir@outlook.com regarding Test Job 1000 Failed
+2018-04-05 11:37:49.441 - controller.controller - INFO - Sent email to byte_md@outlook.com regarding Test Job 1000 Failed
+2018-04-05 11:37:49.441 - controller.controller - INFO - Successful
+2018-04-05 11:37:49.441 - controller.controller - INFO - ===== Stopping =====

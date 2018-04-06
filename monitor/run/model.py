@@ -6,27 +6,32 @@ import pymongo
 import wrapper.outlook as outlook
 
 
-def escalate_job_alerts(alerts, ref_data, params):
+def escalate_job_alerts(alerts, ref_data, params, module_logger):
     #
     # alerts key   = job_name~email_from~response_order~YYYYMMDD_HHMMSS
     # ref data key = dept_name~job_name~response_order
     #
     cur_dt = datetime.datetime.now()
-    for alert in alerts:
+    for key, alert in alerts.items():
+        # print(type(alert), alert)
         notify_dt = alert['notification_dt']
         sla_minutes = alert['sla_time']
         escalate_dt = notify_dt + datetime.timedelta(minutes=sla_minutes)
 
         if escalate_dt < cur_dt:
-            # this job alert needs to be escalated
+            # this job alert needs to be escalated to next person
+            # send mail to everyone from this 1 (original) to this resp_order+1
             resp_order = alert['response_order'] + 1
-            key = '{0}~{1}~{2}'.format(alert['dept_name'], alert['job_name'], resp_order)
-            if key in ref_data:
-                # send mail to everyone from this resp_order to 1
-                print(key)
-            pass
 
-    return None
+            for i in range(1, resp_order+1):
+                ref_key = '{0}~{1}~{2}'.format(alert['dept_name'], alert['job_name'], i)
+
+                if ref_key in ref_data:
+                    # print(ref_data[ref_key])
+                    recipient = ref_data[ref_key]['user_email']
+                    send_mail(params, alert, recipient, i, module_logger)
+
+    return True
 
 
 def get_existing_open_alerts(alerts, module_logger):
@@ -45,6 +50,7 @@ def get_existing_open_alerts(alerts, module_logger):
                     "email_subject": "Test Job 1000 Failed",
                     "email_to": "byte_ic@outlook.com",
                     "job_name": "Test Job 1000",
+                    "job_failure_dt": "2018-01-01 00:00:01"
                     "notification_dt": "2018-03-26 10:00:23",
                     "response_dt": "2018-03-26 10:45:23",
                     "response_order": 1,
@@ -55,19 +61,19 @@ def get_existing_open_alerts(alerts, module_logger):
         },
     """
     result_dict = {}
-    row_num = 1
     for a1 in alerts:
-        alert = a1['transactions'][0]
+
         # skip genesis block
+        alert = a1['transactions'][0]
         if alert['dept_name'] == 'jedi':
             continue
 
         # format alert open date time YYYYMMDD_HHMMSS
-        # print(alert['job_name'], alert['email_from'], alert['response_order'], alert['notification_dt'])
-        tmp_dt = parse(alert['notification_dt'])
+        # print(alert['job_name'], alert['email_from'], alert['response_order'], alert['job_failure_dt'])
+        tmp_dt = parse(alert['job_failure_dt'])
         str_dt = datetime.datetime.strftime(tmp_dt, '%Y%m%d_%H%M%S')
-        key = '{0}~{1}~{2}~{3}'.\
-            format(alert['job_name'], alert['email_from'], alert['response_order'], str_dt)
+        key = '{0}~{1}~{2}'.\
+            format(alert['job_name'], str_dt, int(alert['response_order']))
 
         # print('key {0}: {1}'.format(row_num, key))
 
@@ -81,16 +87,27 @@ def get_existing_open_alerts(alerts, module_logger):
         if 'response_dt' in alert:
             # print('   {0} close'.format(row_num))
             # closing event should have last response order
-            # delete any open's for this close from in-memory cache
-            last_response_order = alert['response_order']
-            for i in range(1, last_response_order+1):
-                tmp_key = '{0}~{1}~{2}~{3}'.\
-                    format(alert['job_name'], alert['email_to'], i, str_dt)
-                if tmp_key in result_dict:
-                    # print('    {0} tmp_key: {1}'.format(row_num, tmp_key))
-                    del result_dict[tmp_key]
+            # delete open for this close from in-memory cache
+            tmp_key = '{0}~{1}~{2}'.\
+                format(alert['job_name'], str_dt, int(alert['response_order']))
+            # print('got closing alert for {0}'.format(tmp_key))
+            if tmp_key in result_dict:
+                # print('    {0} tmp_key: {1}'.format(row_num, tmp_key))
+                del result_dict[tmp_key]
         else:
             # this is an alert (open)
+            # keep only last open alert.  escalation handles sending alerts to
+            # previous members and next person in list
+            prev_resp_order = int(alert['response_order']) - 1
+
+            if prev_resp_order < int(alert['response_order']):
+                tmp_key = '{0}~{1}~{2}'.\
+                    format(alert['job_name'], str_dt, prev_resp_order)
+                # print('add new alert (key, tmp_key)', key, tmp_key)
+                if tmp_key in result_dict:
+                    # print('tmp_key in result_dict')
+                    del result_dict[tmp_key]
+
             # add it to in-memory cache
             new_alert = {
                 '_id': a1['index'],
@@ -99,6 +116,7 @@ def get_existing_open_alerts(alerts, module_logger):
                 'email_subject': alert['email_subject'],
                 'email_to': alert['email_to'],
                 'job_name': alert['job_name'],
+                'job_failure_dt': parse(alert['job_failure_dt']),
                 'notification_dt': parse(alert['notification_dt']),
                 'response_order': int(alert['response_order']),
                 'sla_time': int(alert['sla_time']),
@@ -107,8 +125,8 @@ def get_existing_open_alerts(alerts, module_logger):
 
             result_dict[key] = new_alert
 
-        row_num += 1
-
+    module_logger.info('model.get_existing_open_alerts: {0} of {1} alerts is still open'.
+                       format(len(result_dict), len(alerts)))
     return result_dict
 
 
@@ -296,15 +314,27 @@ def open_connection(params, db_name):
     return client
 
 
-def send_mail(params, alert):
-    msg_recipient = 'byte_maint@outlook.com'    # TODO: Determine who gets this message & body
+def send_mail(params, alert, recipient, response_order, module_logger):
+    msg_recipient = recipient
     msg_subject = alert['email_subject']
-    msg_body = 'We the People of the United States, in Order to form a more perfect Union, ' \
-               + 'establish Justice, insure domestic Tranquility, provide for the common ' \
-               + 'defence,[note 1] promote the general Welfare, and secure the Blessings of ' \
-               + 'Liberty to ourselves and our Posterity, do ordain and establish this ' \
-               + 'Constitution for the United States of America.'
 
-    mail = outlook.Outlook()
-    mail.login(params[0]['MailBoxToMonitor'], params[0]['MailBoxPassword'])
-    mail.sendEmail(msg_recipient, msg_subject, msg_body)
+    failure_dt = '{dt:%Y-%m-%d %H:%M:%S}'.format(dt=alert['job_failure_dt'])
+
+    msg_body = 'Job Name: {job_name}\n' \
+               'Job Failure Datetime: {job_failure_dt}\n'\
+               'Escalation Order: {response_order}\n' \
+               'SLA Time (minutes): {sla_time}'.\
+                   format(job_name=alert['job_name'],
+                          job_failure_dt=failure_dt,
+                          response_order=response_order,
+                          sla_time=alert['sla_time'])
+
+    # print('msg_recipient:', msg_recipient)
+    # print('msg_subject:', msg_subject)
+    # print('msg_body:', msg_body)
+    # print(80*'=')
+    log_msg = 'Sent email to {0} regarding {1}'.format(msg_recipient, msg_subject)
+    module_logger.info(log_msg)
+    # TODO: mail = outlook.Outlook()
+    # TODO: mail.login(params[0]['MailBoxToMonitor'], params[0]['MailBoxPassword'])
+    # TODO: mail.sendEmail(msg_recipient, msg_subject, msg_body)

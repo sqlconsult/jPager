@@ -30,8 +30,7 @@ class BlockChain(object):
                 'email_to': 'yoda',
                 'sla_time': 999,
                 'response_order': 1,
-                'notification_dt': dt_fmt_str.format(dt=datetime.datetime(2018, 1, 1, 0, 0, 1)),
-                'response_dt': dt_fmt_str.format(dt=datetime.datetime(2018, 1, 1, 23, 59, 59))
+                'job_failure_dt': dt_fmt_str.format(dt=datetime.datetime(2018, 1, 1, 0, 0, 1))
             }
             proof = self.proof_of_work(100)
 
@@ -124,8 +123,7 @@ class BlockChain(object):
             'email_to': 'luke',
             'sla_time': 999,
             'response_order': 1,
-            'notification_dt': '{dt:%Y-%m-%d %H:%M:%S}'.format(dt=datetime.datetime(2018, 1, 1, 0, 0, 1)),
-            'response_dt': '{dt:%Y-%m-%d %H:%M:%S}'.format(dt=datetime.datetime(2018, 1, 1, 23, 59, 59))
+            'job_failure_dt': dt_fmt_str.format(dt=datetime.datetime(2018, 1, 1, 0, 0, 1))
         }
 
         # module_logger.info('mine: add new transaction')

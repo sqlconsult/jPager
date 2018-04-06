@@ -29,8 +29,7 @@ class BlockChain(object):
             'email_to': 'yoda',
             'sla_time': 999,
             'response_order': 1,
-            'notification_dt': dt_fmt_str.format(dt=datetime.datetime(2018, 1, 1, 0, 0, 1)),
-            'response_dt': dt_fmt_str.format(dt=datetime.datetime(2018, 1, 1, 23, 59, 59))
+            'job_failure_dt': dt_fmt_str.format(dt=datetime.datetime(2018, 1, 1, 0, 0, 1))
         }
         proof = self.proof_of_work(100)
 
@@ -186,6 +185,11 @@ def main():
     with open('../params.json', 'r') as handle:
         json_params = json.load(handle)
 
+    # pp.pprint(json_params)
+
+    # block chain data file is 1 directory up when seeding
+    json_params[0]['DataChain'] = '../{0}'.format(json_params[0]['DataChain'])
+
     # creating new seed data, if block chain data file exists delete it
     if os.path.exists(json_params[0]['DataChain']):
         module_logger.info('Existing block chain data file {0} will be deleted'.
@@ -283,8 +287,7 @@ def mine(block_chain, node_identifier, module_logger):
         'email_to': 'luke',
         'sla_time': 999,
         'response_order': 1,
-        'notification_dt': '{dt:%Y-%m-%d %H:%M:%S}'.format(dt=datetime.datetime(2018, 1, 1, 0, 0, 1)),
-        'response_dt': '{dt:%Y-%m-%d %H:%M:%S}'.format(dt=datetime.datetime(2018, 1, 1, 23, 59, 59))
+        'job_failure_dt': '{dt:%Y-%m-%d %H:%M:%S}'.format(dt=datetime.datetime(2018, 1, 1, 0, 0, 1))
     }
 
     # module_logger.info('mine: add new transaction')
@@ -329,7 +332,9 @@ def read_test_transactions(inp_file_path):
                 'email_from': row['email_from'],
                 'email_to': row['email_to'],
                 'sla_time': int(row['sla_time']),
-                'response_order': int(row['response_order'])}
+                'response_order': int(row['response_order']),
+                'job_failure_dt': dt_fmt_str.format(dt=parse(row['job_failure_dt']))
+            }
 
             # if there's a notification datetime convert it to datetime
             # then, format it into a consistent format

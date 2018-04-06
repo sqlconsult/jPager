@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
+import datetime
 import json
 import logging
-import os
+# import os
 import pprint
 
 import run.model as model
 import wrapper.logger as logger
-import wrapper.sendmail as sendmail
+import wrapper.mail_tester as sendmail
 import wrapper.blockchain as bc
 
 
@@ -45,8 +46,8 @@ def main():
 
 
 def monitor_loop(params, module_logger):
-    # if not check_credentials(params, module_logger):
-    #     return False
+    # TODO if not check_credentials(params, module_logger):
+    # TODO    return False
 
     # Instantiate our Block chain including a genesis block
     # print('monitor_loop', params[0]['DataChain'])
@@ -62,25 +63,40 @@ def monitor_loop(params, module_logger):
 
     # read block chain alerts and leave only open alerts in a dictionary
     #     str_dt = datetime.datetime.strftime(alert['notification_dt'], '%Y%m%d_%H%M%S')
-    #         key = '{0}~{1}~{2}~{3}'.\
+    #     key = '{0}~{1}~{2}~{3}'.\
     #             format(alert['job_name'], alert['email_from'], alert['response_order'], str_dt)
     open_alerts = model.get_existing_open_alerts(alerts, module_logger)
-    module_logger.info('monitor_loop: Retrieved {0} open alerts'.format(len(open_alerts)))
 
-    pp = pprint.PrettyPrinter(indent=4)
-    s = pp.pformat(open_alerts)
-    print('{0}'.format(s))
+    # for k, v in open_alerts.items():
+    #     print('Key: {key}\n    {value}'.format(key=k, value=v))
 
     ref_data = model.get_ref_data(params)
     module_logger.info('monitor_loop: Retrieved {0} reference data records'.format(len(ref_data)))
 
+    # module_logger.info('ref_data')
     # pp = pprint.PrettyPrinter(indent=4)
     # s = pp.pformat(ref_data)
     # module_logger.info('monitor_loop:{0}'.format(s))
 
-    # TODO model.escalate_job_alerts(open_alerts, ref_data, params)
+    ret_sts = model.escalate_job_alerts(open_alerts, ref_data, params, module_logger)
 
-    return True
+    # While not params.quit and Now <= Midnight Today
+    #
+    #    Get messages from MailboxToMonitor after Date(LastTimeChecked)
+    #    Sort retrieved messages by message id
+    #    For msg in messages:
+    #        Extract from, date time, subject and to from msgs
+    #        Convert msg date time from string to datetime
+
+    now = datetime.datetime.now()
+    midnight = datetime.datetime(now.year, now.month, now.day, 23, 59, 59)
+
+    while params['quit'][1].upper() != 'Q' and now < midnight:
+
+        now = datetime.datetime.now()
+        pass
+
+    return ret_sts
 
 
 def read_params():

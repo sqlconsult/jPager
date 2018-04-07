@@ -2,20 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6a5421be-58e0-4c23-b96d-d1fd9fb9bb48" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/wrapper/credentials.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../doc/.~lock.jPager Technical Design Doc.odt#" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DataChain.json" beforeDir="false" afterPath="$PROJECT_DIR$/DataChain.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/controller.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/params.json" beforeDir="false" afterPath="$PROJECT_DIR$/params.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/setup/Alerts.csv" beforeDir="false" afterPath="$PROJECT_DIR$/setup/Alerts.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run/model.py" beforeDir="false" afterPath="$PROJECT_DIR$/run/model.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/setup/RefData.csv" beforeDir="false" afterPath="$PROJECT_DIR$/setup/RefData.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/setup/RefData.ods" beforeDir="false" afterPath="$PROJECT_DIR$/setup/RefData.ods" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/setup/bc_seed.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup/bc_seed.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wrapper/log_20180406_103456.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/wrapper/log_20180406_103815.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/wrapper/mail_tester.py" beforeDir="false" afterPath="$PROJECT_DIR$/wrapper/mail_tester.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wrapper/galaxy.py" beforeDir="false" afterPath="$PROJECT_DIR$/wrapper/galaxy.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wrapper/log_20180407_113218.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/wrapper/log_20180407_113222.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/wrapper/log_20180407_120258.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/wrapper/log_20180407_120410.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/wrapper/log_20180407_121044.log" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/wrapper/log_20180407_121727.log" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/wrapper/outlook.py" beforeDir="false" afterPath="$PROJECT_DIR$/wrapper/outlook.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wrapper/outlook_config.py" beforeDir="false" afterPath="$PROJECT_DIR$/wrapper/outlook_config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wrapper/outlook_old.py" beforeDir="false" afterPath="$PROJECT_DIR$/wrapper/outlook_old.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wrapper/test_galaxy.py" beforeDir="false" afterPath="$PROJECT_DIR$/wrapper/test_galaxy.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -32,50 +36,32 @@
       <file leaf-file-name="test_galaxy.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/wrapper/test_galaxy.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="141">
-              <caret line="21" column="82" lean-forward="true" selection-start-line="21" selection-start-column="4" selection-end-line="21" selection-end-column="82" />
+            <state relative-caret-position="177">
+              <caret line="132" column="24" lean-forward="true" selection-start-line="129" selection-end-line="139" selection-end-column="61" />
               <folding>
                 <element signature="e#24#39#0" expanded="true" />
-                <element signature="e#886#2128#0" />
-                <element signature="e#683#1384#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="galaxy.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/wrapper/galaxy.py">
+      <file leaf-file-name="controller.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/controller.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="303">
-              <caret line="231" lean-forward="true" selection-start-line="231" selection-end-line="231" />
+            <state relative-caret-position="-180">
+              <caret line="62" column="41" lean-forward="true" selection-start-line="62" selection-start-column="41" selection-end-line="62" selection-end-column="41" />
               <folding>
-                <element signature="e#42#54#0" expanded="true" />
-                <element signature="e#166#780#0" />
-                <element signature="e#1298#1893#0" />
-                <element signature="e#1679#2742#0" />
-                <element signature="e#1345#1671#0" />
-                <element signature="e#1345#1452#0" />
-                <element signature="e#1497#1773#0" />
-                <element signature="e#1413#1532#0" />
-                <element signature="e#3096#3114#0" />
-                <element signature="e#3482#4064#0" />
-                <element signature="e#4632#4922#0" />
-                <element signature="e#5322#6172#0" />
-                <element signature="e#7162#7863#0" />
+                <element signature="e#23#38#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="mail_tester.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/wrapper/mail_tester.py">
+      <file leaf-file-name="credentials.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/wrapper/credentials.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="142">
-              <caret line="138" selection-start-line="138" selection-end-line="138" selection-end-column="42" />
-              <folding>
-                <element signature="e#24#39#0" expanded="true" />
-                <element signature="e#441#1683#0" />
-              </folding>
+            <state relative-caret-position="144">
+              <caret line="8" column="16" selection-start-line="8" selection-start-column="16" selection-end-line="8" selection-end-column="16" />
             </state>
           </provider>
         </entry>
@@ -83,25 +69,20 @@
       <file leaf-file-name="outlook.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/wrapper/outlook.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="36">
-              <caret line="2" selection-start-line="2" selection-end-line="2" selection-end-column="13" />
+            <state relative-caret-position="-695">
+              <caret line="78" column="35" lean-forward="true" selection-start-line="78" selection-start-column="35" selection-end-line="78" selection-end-column="35" />
               <folding>
                 <element signature="e#24#36#0" expanded="true" />
-                <element signature="e#2058#2151#0" />
-                <element signature="e#2804#2974#0" />
-                <element signature="e#3013#3066#0" />
-                <element signature="e#3100#3362#0" />
-                <element signature="e#6381#7231#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="outlook_config.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/wrapper/outlook_config.py">
+      <file leaf-file-name="params.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/params.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="10" selection-start-line="10" selection-end-line="13" selection-end-column="15" />
+            <state relative-caret-position="162">
+              <caret line="9" column="32" selection-start-line="9" selection-start-column="32" selection-end-line="9" selection-end-column="32" />
             </state>
           </provider>
         </entry>
@@ -109,10 +90,41 @@
       <file leaf-file-name="model.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/run/model.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="6012">
-              <caret line="337" column="23" selection-start-line="337" selection-start-column="23" selection-end-line="337" selection-end-column="23" />
+            <state relative-caret-position="-216">
+              <caret line="9" column="42" selection-start-line="9" selection-start-column="42" selection-end-line="9" selection-end-column="42" />
               <folding>
                 <element signature="e#24#39#0" expanded="true" />
+                <element signature="e#1270#5254#0" />
+                <element signature="e#5294#9134#0" />
+                <element signature="e#9167#10841#0" />
+                <element signature="e#10886#11437#0" />
+                <element signature="e#11521#12849#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="galaxy.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/wrapper/galaxy.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="288">
+              <caret line="120" selection-start-line="120" selection-end-line="120" />
+              <folding>
+                <element signature="e#24#39#0" expanded="true" />
+                <element signature="e#170#1084#0" />
+                <element signature="e#1132#1330#0" />
+                <element signature="e#1373#1670#0" />
+                <element signature="e#1757#2804#0" />
+                <element signature="e#2820#3170#0" />
+                <element signature="e#3229#3790#0" />
+                <element signature="e#4128#4239#0" />
+                <element signature="e#4277#4572#0" />
+                <element signature="e#4326#4358#0" />
+                <element signature="e#4773#4795#0" />
+                <element signature="e#4841#5378#0" />
+                <element signature="e#5112#5514#0" />
+                <element signature="e#5558#5721#0" />
+                <element signature="e#5905#6763#0" />
               </folding>
             </state>
           </provider>
@@ -153,6 +165,7 @@
       <find>logger</find>
       <find>print</find>
       <find>self.mail</find>
+      <find>for</find>
     </findStrings>
     <replaceStrings>
       <replace>= alert['</replace>
@@ -207,19 +220,21 @@
         <option value="$PROJECT_DIR$/setup/runit.sh" />
         <option value="$PROJECT_DIR$/setup/log_20180403_140848.log" />
         <option value="$PROJECT_DIR$/wrapper/blockchain.py" />
-        <option value="$PROJECT_DIR$/run/model.py" />
         <option value="$PROJECT_DIR$/wrapper/outlook_new.py" />
         <option value="$PROJECT_DIR$/wrapper/sendmail.py" />
-        <option value="$PROJECT_DIR$/controller.py" />
         <option value="$PROJECT_DIR$/setup/bc_seed.py" />
         <option value="$PROJECT_DIR$/wrapper/outlook_config.py" />
-        <option value="$PROJECT_DIR$/params.json" />
         <option value="$PROJECT_DIR$/wrapper/mail_tester.py" />
         <option value="$PROJECT_DIR$/wrapper/outlook.py" />
         <option value="$PROJECT_DIR$/wrapper/test_email.py" />
         <option value="$PROJECT_DIR$/wrapper/email.py" />
+        <option value="$PROJECT_DIR$/wrapper/log_20180407_125223.log" />
+        <option value="$PROJECT_DIR$/params.json" />
         <option value="$PROJECT_DIR$/wrapper/test_galaxy.py" />
+        <option value="$PROJECT_DIR$/wrapper/credentials.py" />
         <option value="$PROJECT_DIR$/wrapper/galaxy.py" />
+        <option value="$PROJECT_DIR$/run/model.py" />
+        <option value="$PROJECT_DIR$/controller.py" />
       </list>
     </option>
   </component>
@@ -230,10 +245,10 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="78" />
-    <option name="y" value="36" />
+    <option name="x" value="83" />
+    <option name="y" value="37" />
     <option name="width" value="1248" />
-    <option name="height" value="578" />
+    <option name="height" value="682" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -241,6 +256,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -251,13 +267,17 @@
             <path>
               <item name="monitor" type="b2602c69:ProjectViewProjectNode" />
               <item name="monitor" type="462c0819:PsiDirectoryNode" />
+              <item name="run" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="monitor" type="b2602c69:ProjectViewProjectNode" />
+              <item name="monitor" type="462c0819:PsiDirectoryNode" />
               <item name="wrapper" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -324,22 +344,22 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="78" y="36" width="1248" height="578" extended-state="0" />
+    <frame x="83" y="37" width="1248" height="682" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="13" side_tool="true" />
       <window_info anchor="bottom" id="Database Changes" order="12" show_stripe_button="false" />
       <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Version Control" order="9" weight="0.59786475" />
+      <window_info anchor="bottom" id="Version Control" order="9" weight="0.5977528" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.516295" />
       <window_info anchor="bottom" id="Terminal" order="11" weight="0.32933104" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.07371795" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.20032051" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="4" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32867134" />
       <window_info anchor="right" id="SciView" order="3" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Concurrent Activities Diagram" weight="0.3280899" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.24979044" />
@@ -349,7 +369,7 @@
       <window_info anchor="bottom" id="Messages" order="8" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32867134" />
+      <window_info anchor="bottom" id="Concurrent Activities Diagram" order="14" weight="0.3280899" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -394,22 +414,58 @@
           <option name="timeStamp" value="27" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="33" />
+      <option name="time" value="34" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/logs/monitor_log_20180322_131449.log" />
-    <entry file="file://$PROJECT_DIR$/logs/monitor_log_20180322_160940.log" />
-    <entry file="file://$PROJECT_DIR$/logs/monitor_log_20180322_135532.log" />
-    <entry file="file://$PROJECT_DIR$/wrapper/mongo.py" />
-    <entry file="file://$PROJECT_DIR$/bot.sh">
+    <entry file="file://$PROJECT_DIR$/wrapper/test_galaxy.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+        <state relative-caret-position="828">
+          <caret line="46" lean-forward="true" selection-start-line="46" selection-end-line="46" />
+          <folding>
+            <element signature="e#24#39#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/logs/monitor_log_20180326_153925.log" />
+    <entry file="file://$PROJECT_DIR$/wrapper/credentials.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="8" column="13" selection-start-line="8" selection-start-column="5" selection-end-line="8" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/params.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="9" column="32" lean-forward="true" selection-start-line="9" selection-start-column="32" selection-end-line="9" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wrapper/galaxy.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret selection-end-column="22" />
+          <folding>
+            <element signature="e#24#39#0" expanded="true" />
+            <element signature="e#170#1084#0" />
+            <element signature="e#1132#1330#0" />
+            <element signature="e#1373#1670#0" />
+            <element signature="e#1757#2804#0" />
+            <element signature="e#2820#3170#0" />
+            <element signature="e#3229#3790#0" />
+            <element signature="e#4128#4239#0" />
+            <element signature="e#4277#4572#0" />
+            <element signature="e#4326#4358#0" />
+            <element signature="e#4773#4795#0" />
+            <element signature="e#4841#5378#0" />
+            <element signature="e#5112#5514#0" />
+            <element signature="e#5558#5721#0" />
+            <element signature="e#5905#6763#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/logs/monitor_log_20180326_154224.log" />
     <entry file="file://$PROJECT_DIR$/logs/monitor_log_20180322_161343.log" />
     <entry file="file://$PROJECT_DIR$/logs/monitor_log_20180327_091838.log" />
@@ -465,16 +521,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/run/model.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6012">
-          <caret line="337" column="23" selection-start-line="337" selection-start-column="23" selection-end-line="337" selection-end-column="23" />
-          <folding>
-            <element signature="e#24#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/wrapper/outlook_old.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="101">
@@ -523,49 +569,7 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/wrapper/log_20180406_131224.log" />
-    <entry file="file://$PROJECT_DIR$/params.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="211">
-          <caret line="12" column="22" lean-forward="true" selection-start-line="12" selection-start-column="22" selection-end-line="12" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/wrapper/log_20180406_131622.log" />
-    <entry file="file://$PROJECT_DIR$/controller.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-column="22" />
-          <folding>
-            <element signature="e#23#38#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wrapper/outlook_config.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="10" selection-start-line="10" selection-end-line="13" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wrapper/log_20180407_110301.log">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wrapper/outlook.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="36">
-          <caret line="2" selection-start-line="2" selection-end-line="2" selection-end-column="13" />
-          <folding>
-            <element signature="e#24#36#0" expanded="true" />
-            <element signature="e#2058#2151#0" />
-            <element signature="e#2804#2974#0" />
-            <element signature="e#3013#3066#0" />
-            <element signature="e#3100#3362#0" />
-            <element signature="e#6381#7231#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/wrapper/mail_tester.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="142">
@@ -577,42 +581,96 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/wrapper/log_20180407_110855.log">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wrapper/log_20180407_111400.log">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wrapper/test_galaxy.py">
+    <entry file="file://$PROJECT_DIR$/wrapper/log_20180407_125223.log" />
+    <entry file="file://$PROJECT_DIR$/params.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="141">
-          <caret line="21" column="82" lean-forward="true" selection-start-line="21" selection-start-column="4" selection-end-line="21" selection-end-column="82" />
+        <state relative-caret-position="162">
+          <caret line="9" column="32" selection-start-line="9" selection-start-column="32" selection-end-line="9" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wrapper/outlook_config.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="72">
+          <caret line="4" column="17" lean-forward="true" selection-start-line="4" selection-start-column="17" selection-end-line="4" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wrapper/log_20180407_164348.log">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wrapper/credentials.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="8" column="16" selection-start-line="8" selection-start-column="16" selection-end-line="8" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wrapper/outlook.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-695">
+          <caret line="78" column="35" lean-forward="true" selection-start-line="78" selection-start-column="35" selection-end-line="78" selection-end-column="35" />
           <folding>
-            <element signature="e#24#39#0" expanded="true" />
-            <element signature="e#886#2128#0" />
-            <element signature="e#683#1384#0" />
+            <element signature="e#24#36#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/wrapper/galaxy.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="303">
-          <caret line="231" lean-forward="true" selection-start-line="231" selection-end-line="231" />
+        <state relative-caret-position="288">
+          <caret line="120" selection-start-line="120" selection-end-line="120" />
           <folding>
-            <element signature="e#42#54#0" expanded="true" />
-            <element signature="e#166#780#0" />
-            <element signature="e#1298#1893#0" />
-            <element signature="e#1679#2742#0" />
-            <element signature="e#1345#1671#0" />
-            <element signature="e#1345#1452#0" />
-            <element signature="e#1497#1773#0" />
-            <element signature="e#1413#1532#0" />
-            <element signature="e#3096#3114#0" />
-            <element signature="e#3482#4064#0" />
-            <element signature="e#4632#4922#0" />
-            <element signature="e#5322#6172#0" />
-            <element signature="e#7162#7863#0" />
+            <element signature="e#24#39#0" expanded="true" />
+            <element signature="e#170#1084#0" />
+            <element signature="e#1132#1330#0" />
+            <element signature="e#1373#1670#0" />
+            <element signature="e#1757#2804#0" />
+            <element signature="e#2820#3170#0" />
+            <element signature="e#3229#3790#0" />
+            <element signature="e#4128#4239#0" />
+            <element signature="e#4277#4572#0" />
+            <element signature="e#4326#4358#0" />
+            <element signature="e#4773#4795#0" />
+            <element signature="e#4841#5378#0" />
+            <element signature="e#5112#5514#0" />
+            <element signature="e#5558#5721#0" />
+            <element signature="e#5905#6763#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wrapper/test_galaxy.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="177">
+          <caret line="132" column="24" lean-forward="true" selection-start-line="129" selection-end-line="139" selection-end-column="61" />
+          <folding>
+            <element signature="e#24#39#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/run/model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-216">
+          <caret line="9" column="42" selection-start-line="9" selection-start-column="42" selection-end-line="9" selection-end-column="42" />
+          <folding>
+            <element signature="e#24#39#0" expanded="true" />
+            <element signature="e#1270#5254#0" />
+            <element signature="e#5294#9134#0" />
+            <element signature="e#9167#10841#0" />
+            <element signature="e#10886#11437#0" />
+            <element signature="e#11521#12849#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controller.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-180">
+          <caret line="62" column="41" lean-forward="true" selection-start-line="62" selection-start-column="41" selection-end-line="62" selection-end-column="41" />
+          <folding>
+            <element signature="e#23#38#0" expanded="true" />
           </folding>
         </state>
       </provider>

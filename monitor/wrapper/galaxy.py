@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# import datetime
+import datetime
 import email
 import imaplib
 import smtplib
@@ -39,25 +39,12 @@ class MailClass:
             return False, None
 
     def get_email(self, msg_id):
-        self.mail_svr.select("inbox")  # connect to inbox.
         # For a given message id retrieve the raw mail message
         # print('msg_id:', msg_id)
-        typ, data = self.mail_svr.fetch(msg_id, "(RFC822)")
-
-        # raw_email = data[0][1].decode('UTF-8', 'replace')
-        #
-        # # print('get_email: raw_email:', raw_email)
-        # self.raw_email = raw_email
-        # self.email_message = email.message_from_string(self.raw_email)
-
-        # print(data)
-
-        msg = ''
-        for response_part in data:
-            if isinstance(response_part, tuple):
-                msg = self.mail_svr.message_from_string(response_part[1])
-
-        return msg
+        typ, data = self.mail_svr.fetch(str(msg_id), "(RFC822)")
+        raw_email = data[0][1].decode('UTF-8', 'replace')
+        email_message = email.message_from_string(raw_email)
+        return email_message
 
     def get_emails_after_date(self, inp_date):
         # Get all emails after input date and return list of dictionary's
@@ -87,28 +74,26 @@ class MailClass:
         return stack
 
     def get_id_list(self):
-        self.mail_svr.select("inbox")       # connect to inbox
+
         result, data = self.mail_svr.search(None, "ALL")
-        print('result:', result)
-        print('data:', data)
+        # print('result:', result)
+        # print('data:', data)
         ids = data[0].decode('UTF-8')   # data is a list.
-        id_list = ids.split()           # ids is a space separated string
-        print('id_list:', id_list)
+        str_ids = ids.split()           # ids is a space separated string
+        id_list = [int(x) for x in str_ids]
+        # print('id_list:', id_list)
         return id_list
 
     def get_latest_email(self):
         # get the latest message and return a dictionary
         msg_id_list = self.get_id_list()
-        print('msg_id_list:', msg_id_list)
         latest_email_id = msg_id_list[-1]
 
         # fetch the email body (RFC822) for the given ID
         # result, data = self.mail_svr.fetch(latest_email_id, "(RFC822)")
         # raw_email = data[0][1].decode('UTF-8')
-
         raw_email = self.get_email(latest_email_id)
         parsed_email = self.parse_raw_email(latest_email_id, raw_email)
-
         return parsed_email
 
     def get_mbx_list(self):
@@ -123,10 +108,16 @@ class MailClass:
         uid_list = ids.split()  # ids is a space separated string
         return uid_list
 
+    def inbox(self):
+        return self.mail_svr.select("Inbox")
+
     def login(self):
-        # self.mail_svr.login('byte_ic@galaxy-usa.com', 'rQ64sb#8')
-        self.mail_svr.login(self.user_name, self.user_pwd)
-        return True
+        # self.mail_svr.login('byte_ic@galaxy-usa.com', 'Byte1234')
+        try:
+            self.mail_svr.login(self.user_name, self.user_pwd)
+            return True
+        except:
+            return False
 
     def logout(self):
         self.mail_svr.logout()
@@ -152,7 +143,7 @@ class MailClass:
     def parse_raw_email(self, msg_id, raw_email):
         msg = {
             'msg_id': msg_id,
-            'msg_body': self.mail_svr_body(raw_email),
+            'msg_body': self.mail_body(raw_email),
             'msg_date': raw_email['Date'],
             'msg_from': raw_email['from'],
             'msg_reply_to': raw_email['Reply-To'],
@@ -161,6 +152,12 @@ class MailClass:
             'msg_to': raw_email['to']
         }
         return msg
+
+    def select_mbx(self, mbx_nm):
+        if mbx_nm.lower == 'inbox':
+            return self.mail_svr.select("inbox")
+        elif mbx_nm.lower() == 'junk':
+            return self.mail_svr.select('junk')
 
     def send_email(self, recipient, subject, message):
         headers = "\r\n".join([
@@ -195,9 +192,13 @@ def main():
     # module_logger = logging.getLogger('{app_name}.main'.format(app_name=app_name))
 
     email_id = 'byte_ic@galaxy-usa.com'
-    email_pwd = 'rQ64sb#8'
+    email_pwd = 'Byte1234'
     mail_x = MailClass('mail.galaxy.net', email_id, email_pwd)
     mail_x.login()
+
+    mail_x.inbox()
+    mbx_list = mail_x.get_mbx_list()
+    print('mailbox list:', mbx_list)
 
     # for i in range(1009, 1012):
     #     send_test_message(mail, i)
@@ -205,6 +206,16 @@ def main():
     # get the latest
     tmp_list = mail_x.get_id_list()
     print(tmp_list)
+
+    latest_email = mail_x.get_latest_email()
+    print(latest_email)
+
+    inp_date = datetime.datetime(2018, 4, 7)
+    email_list = mail_x.get_emails_after_date(inp_date)
+    print(80*'=')
+    print('len(email_list)', len(email_list))
+    print(email_list)
+
     mail_x.logout()
 
 
@@ -227,7 +238,7 @@ def main():
 #     # add the handlers to the logger
 #     p_logger.addHandler(fh)
 #     p_logger.addHandler(ch)
-#
+
 
 if __name__ == '__main__':
     main()

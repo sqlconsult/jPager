@@ -3,17 +3,17 @@
 import datetime
 from dateutil.parser import parse
 import pymongo
-import wrapper.outlook as outlook
+
+import galaxy
 
 
-def escalate_job_alerts(alerts, ref_data, params, module_logger):
+def escalate_job_alerts(alerts, ref_data, module_logger, credentials):
     #
     # alerts key   = job_name~email_from~response_order~YYYYMMDD_HHMMSS
     # ref data key = dept_name~job_name~response_order
     #
     cur_dt = datetime.datetime.now()
     for key, alert in alerts.items():
-        # print(type(alert), alert)
         notify_dt = alert['notification_dt']
         sla_minutes = alert['sla_time']
         escalate_dt = notify_dt + datetime.timedelta(minutes=sla_minutes)
@@ -29,7 +29,7 @@ def escalate_job_alerts(alerts, ref_data, params, module_logger):
                 if ref_key in ref_data:
                     # print(ref_data[ref_key])
                     recipient = ref_data[ref_key]['user_email']
-                    send_mail(params, alert, recipient, i, module_logger)
+                    send_mail(credentials, alert, recipient, i, module_logger)
 
     return True
 
@@ -314,27 +314,39 @@ def open_connection(params, db_name):
     return client
 
 
-def send_mail(params, alert, recipient, response_order, module_logger):
-    msg_recipient = recipient
-    msg_subject = alert['email_subject']
+def send_mail(credentials, alert, recipient, response_order, module_logger):
 
-    failure_dt = '{dt:%Y-%m-%d %H:%M:%S}'.format(dt=alert['job_failure_dt'])
+    email_id = credentials['maint']['user_name']
+    email_pwd = credentials['maint']['user_pwd']
 
-    msg_body = 'Job Name: {job_name}\n' \
-               'Job Failure Datetime: {job_failure_dt}\n'\
-               'Escalation Order: {response_order}\n' \
-               'SLA Time (minutes): {sla_time}'.\
-                   format(job_name=alert['job_name'],
-                          job_failure_dt=failure_dt,
-                          response_order=response_order,
-                          sla_time=alert['sla_time'])
+    mail_x = galaxy.MailClass('mail.galaxy.net', email_id, email_pwd)
+    login_success = mail_x.login()
 
-    # print('msg_recipient:', msg_recipient)
-    # print('msg_subject:', msg_subject)
-    # print('msg_body:', msg_body)
-    # print(80*'=')
-    log_msg = 'Sent email to {0} regarding {1}'.format(msg_recipient, msg_subject)
-    module_logger.info(log_msg)
-    # TODO: mail = outlook.Outlook()
-    # TODO: mail.login(params[0]['MailBoxToMonitor'], params[0]['MailBoxPassword'])
-    # TODO: mail.sendEmail(msg_recipient, msg_subject, msg_body)
+    if login_success:
+        mail_x.inbox()
+
+        msg_recipient = recipient
+        msg_subject = alert['email_subject']
+
+        failure_dt = '{dt:%Y-%m-%d %H:%M:%S}'.format(dt=alert['job_failure_dt'])
+
+        msg_body_hdr = '{0}\n\n{1}\n\n'.format(msg_subject, 80 * '=')
+        msg_body_text = 'Job Name: {job_name}\n'\
+                        'Job Failure Datetime: {job_failure_dt}\n'\
+                        'Escalation Order: {response_order}\n' \
+                        'SLA Time (minutes): {sla_time}'.\
+                            format(job_name=alert['job_name'],
+                                   job_failure_dt=failure_dt,
+                                   response_order=response_order,
+                                   sla_time=alert['sla_time'])
+        msg_body = msg_body_hdr + msg_body_text
+
+        # print('msg_recipient:', msg_recipient)
+        # print('msg_subject:', msg_subject)
+        # print('msg_body:', msg_body)
+        # print(80*'=')
+        log_msg = 'Sent email to {0} regarding {1}'.format(msg_recipient, msg_subject)
+        module_logger.info(log_msg)
+
+        mail_x.send_email(msg_recipient, msg_subject, msg_body)
+

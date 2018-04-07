@@ -7,19 +7,8 @@ import pprint
 
 import run.model as model
 import wrapper.logger as logger
-import wrapper.mail_tester as sendmail
+import wrapper.credentials as cred
 import wrapper.blockchain as bc
-
-
-def check_credentials(params, module_logger):
-    # check mailbox to monitor credentials
-    email_id = params[0]['MailBoxToMonitor']    # mailbox =_maint@outlook.com
-    email_pwd = params[0]['MailBoxPassword']    # pwd = Byte1234
-    return_status = sendmail.check_credentials(email_id, email_pwd)
-    if not return_status:
-        module_logger.error('Failed credential check for {mbx}'.format(mbx=email_id))
-        return False
-    return True
 
 
 def main():
@@ -46,9 +35,6 @@ def main():
 
 
 def monitor_loop(params, module_logger):
-    # TODO if not check_credentials(params, module_logger):
-    # TODO    return False
-
     # Instantiate our Block chain including a genesis block
     # print('monitor_loop', params[0]['DataChain'])
     # print('monitor_loop', os.getcwd())
@@ -78,7 +64,7 @@ def monitor_loop(params, module_logger):
     # s = pp.pformat(ref_data)
     # module_logger.info('monitor_loop:{0}'.format(s))
 
-    ret_sts = model.escalate_job_alerts(open_alerts, ref_data, params, module_logger)
+    ret_sts = model.escalate_job_alerts(open_alerts, ref_data, module_logger, cred.creds)
 
     # While not params.quit and Now <= Midnight Today
     #

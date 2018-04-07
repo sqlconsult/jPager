@@ -7,7 +7,7 @@ import pprint
 import time as t1
 
 import galaxy
-
+import credentials
 
 def main():
     # Instantiate json pretty printer
@@ -21,16 +21,30 @@ def main():
 
     module_logger = logging.getLogger('{app_name}.main'.format(app_name=app_name))
     module_logger.info('===== Starting =====')
+    #
+    # module_logger.info('Read json parameters')
+    # with open('../params.json', 'r') as handle:
+    #     json_params = json.load(handle)
 
-    module_logger.info('Read json parameters')
-    with open('../params.json', 'r') as handle:
-        json_params = json.load(handle)
+    # email_id_x = json_params[0]['MailBoxToMonitor']
+    # email_pwd_x = json_params[0]['MailBoxPassword']
+    #
+    # print('JSON:  [{0}] [{1}]'.format(email_id_x, email_pwd_x))
+    # print('JSON:  [{0}] [{1}]'.format(type(email_id_x), type(email_pwd_x)))
 
-    email_id = json_params[0]['MailBoxToMonitor']
-    email_pwd = json_params[0]['MailBoxPassword']
+    # email_id = 'byte_ic@galaxy-usa.com'
+    # email_pwd = 'Byte1234'
+    # print('FIXED: [{0}] [{1}]'.format(email_id_x, email_pwd_x))
+
+    email_id = credentials.creds['ic']['user_name']
+    email_pwd = credentials.creds['ic']['user_pwd']
 
     mail_x = galaxy.MailClass('mail.galaxy.net', email_id, email_pwd)
     mail_x.login()
+
+    mail_x.inbox()
+    mbx_list = mail_x.get_mbx_list()
+    print('mailbox list:', mbx_list)
 
     # for i in range(1009, 1012):
     #     send_test_message(mail, i)
@@ -39,9 +53,16 @@ def main():
     tmp_list = mail_x.get_id_list()
     print(tmp_list)
 
-    # latest_email = mail.get_latest_email()
-    # module_logger.info(latest_email)
+    latest_email = mail_x.get_latest_email()
+    print(latest_email)
 
+    inp_date = datetime.datetime(2018, 4, 7)
+    email_list = mail_x.get_emails_after_date(inp_date)
+    print(80*'=')
+    print('len(email_list)', len(email_list))
+    print(email_list)
+
+    mail_x.logout()
     module_logger.info('===== Done =====')
 
 

@@ -3,8 +3,8 @@
   {
     "DataChain": "DataChain.json",
     "LastTimeChecked": "3/1/2018 00:00:01",
-    "MailBoxToMonitor": "byte_maint@outlook.com",
-    "MailBoxPassword": "Byte1234",
+    "MailBoxToMonitor": "byte_maint@galaxy-usa.com",
+    "MailBoxPassword": "rQ64sb#8",
     "MessageSubject": "Job d{0:10}.*$",
     "Mongo": {
       "user_name": "test_admin",

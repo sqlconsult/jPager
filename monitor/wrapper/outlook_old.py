@@ -4,11 +4,11 @@
 # TODO: Implement logging in place of print (line 57)
 #
 
-import email
+import galaxy
 import imaplib
 import smtplib
 import datetime
-import email.mime.multipart
+import galaxy.mime.multipart
 import base64
 
 import wrapper.outlook_config as config
@@ -80,7 +80,7 @@ class Outlook:
                 return False
 
     def sendEmailMIME(self, recipient, subject, message):
-        msg = email.mime.multipart.MIMEMultipart()
+        msg = galaxy.mime.multipart.MIMEMultipart()
         msg['to'] = recipient
         msg['from'] = self.username
         msg['subject'] = subject
@@ -224,7 +224,7 @@ class Outlook:
 
         # print('getEmail: raw_email:', raw_email)
         self.raw_email = raw_email
-        self.email_message = email.message_from_string(self.raw_email)
+        self.email_message = galaxy.message_from_string(self.raw_email)
         return self.email_message
 
     def unread(self):

@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 
-import email
+import galaxy
 import imaplib
 import smtplib
 import datetime
-import email.mime.multipart
+import galaxy.mime.multipart
 import base64
 import outlook_config as config
 
@@ -58,13 +58,23 @@ class Outlook:
         return ret_val
 
     def get_email(self, msg_id):
-        r, d = self.imap.fetch(msg_id, "(RFC822)")
+        print('msg_id:', msg_id)
+        typ, data = self.imap.fetch(msg_id, "(RFC822)")
 
-        raw_email = d[0][1].decode('UTF-8', 'replace')
+        # raw_email = data[0][1].decode('UTF-8', 'replace')
+        #
+        # # print('get_email: raw_email:', raw_email)
+        # self.raw_email = raw_email
+        # self.email_message = email.message_from_string(self.raw_email)
 
-        # print('get_email: raw_email:', raw_email)
-        self.raw_email = raw_email
-        self.email_message = email.message_from_string(self.raw_email)
+        print(data)
+
+        for response_part in data:
+            if isinstance(response_part, tuple):
+                msg = galaxy.message_from_string(response_part[1])
+
+        self.email_message = msg
+
         return self.email_message
 
     def get_ids_with_word(self, ids, word):
@@ -75,15 +85,26 @@ class Outlook:
                 stack.append(id1)
         return stack
 
+    def get_mailboxes(self):
+        typ, data = self.imap.list()
+        return typ, data
+
+    def get_uids(self):
+        typ, data = self.imap.uid('search', None, "ALL")  # search and return uids instead
+        # latest_email_uid = data[0].split()[-1]
+        # result, data = mail.uid('fetch', latest_email_uid, '(RFC822)')
+        # raw_email = data[0][1]
+        return typ, data
+
     def has_unread(self):
         ret_val = self.unread_ids()
         return ret_val != []
 
     def inbox(self):
-        return self.imap.select("Inbox")
+        return self.imap.select("INBOX")
 
     def junk(self):
-        return self.imap.select("Junk")
+        return self.imap.select("INBOX.Spam")
 
     def login(self, username, password):
         self.username = username
@@ -93,10 +114,10 @@ class Outlook:
                 self.imap = imaplib.IMAP4_SSL(config.imap_server, config.imap_port)
                 r, d = self.imap.login(username, password)
                 assert r == 'OK', 'login failed'
-                self.logger.info('outlook.login: Signed in as {0}'.format(d))
+                self.logger.info('outlook.login: Login successful')
                 return True
             except:
-                self.logger.error('outlook.login: Sign as {0} failed'.format(username))
+                self.logger.error('outlook.login: Login failed')
                 return False
 
     def mail_all(self):
@@ -200,7 +221,7 @@ class Outlook:
                 return False
 
     def send_email_mime(self, recipient, subject, message):
-        msg = email.mime.multipart.MIMEMultipart()
+        msg = galaxy.mime.multipart.MIMEMultipart()
         msg['to'] = recipient
         msg['from'] = self.username
         msg['subject'] = subject
@@ -234,20 +255,23 @@ class Outlook:
         return ''
 
     def unread_after_date(self, inp_date):
+        # qry_date = inp_date.strftime("%-d-%b-%Y")    # no leading zero in day
         qry_date = inp_date.strftime("%d-%b-%Y")
-        # print('qry_date:', qry_date)
+        print('qry_date:', qry_date)
 
         search_criteria = '(SINCE "{qry_date}")'.format(qry_date=qry_date)
-        # print('search_criteria:', search_criteria)
+        print('search_criteria:', search_criteria)
 
-        r, d = self.imap.search(None, search_criteria, 'ALL')
-        search_result = d[0].decode('UTF-8')
-        # print('search_result:', 'xxx' + search_result + 'xxx')
+        typ, data = self.imap.search(None, search_criteria, 'ALL')
+        print('typ:', typ)
+        print('data:', data)
+        search_result = data[0].decode('UTF-8')
+        print('search_result:', 'xxx' + search_result + 'xxx')
 
         # if no messages (search_result has message ids) since input date return empty list
-        msg_ids = search_result.split(' ')
-        # msg_ids = [int(x) for x in str_ids]
-        # print('msg_ids:', msg_ids)
+        str_ids = search_result.split(' ')
+        msg_ids = [int(x) for x in str_ids]
+        print('msg_ids:', msg_ids)
 
         stack = []
         for msg_id in msg_ids:

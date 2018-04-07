@@ -1,0 +1,4 @@
+2018-04-07 11:32:18.922 - test_galaxy.main - INFO - ===== Starting =====
+2018-04-07 11:32:18.922 - test_galaxy.main - INFO - Read json parameters
+2018-04-07 11:32:19.294 - test_galaxy.main - INFO - MailClass.init: Login attempt 1 of 5 - Successful
+2018-04-07 11:32:19.449 - test_galaxy.main - INFO - ===== Done =====

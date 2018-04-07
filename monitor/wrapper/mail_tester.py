@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 
 import datetime
+import json
 import logging
+import pprint
 import time as t1
 
 # import smtplib
@@ -57,7 +59,21 @@ def convert_to_date(inp_dt):
     return local_dt
 
 
+def list_mbx(email_id, email_pwd, module_logger):
+    # Read messages after specified date
+    mail = outlook.Outlook(module_logger)
+    mail.login(email_id, email_pwd)
+    mail.inbox()
+    typ, data = mail.get_mailboxes()
+    print('Response code:', typ)
+    print('Response:', data)
+    return True
+
+
 def main():
+    # Instantiate json pretty printer
+    pp = pprint.PrettyPrinter(indent=4)
+
     # Start logger
     app_name = __file__.split('.')[0]
     logger = logging.getLogger(app_name)
@@ -67,12 +83,23 @@ def main():
     module_logger = logging.getLogger('{app_name}.main'.format(app_name=app_name))
     module_logger.info('===== Starting =====')
 
-    email_id = 'byte_maint@outlook.com'
-    email_pwd = 'Byte1234'
+    module_logger.info('Read json parameters')
+    with open('../params.json', 'r') as handle:
+        json_params = json.load(handle)
+
+    # email_id = 'byte_maint@outlook.com'
+    # email_pwd = 'Byte1234'
+    # email_id = 'byte_maint@galaxy-usa.com'
+    # email_pwd = 'Byte1234'
+
+    email_id = json_params[0]['MailBoxToMonitor']
+    email_pwd = json_params[0]['MailBoxPassword']
     ans = check_credentials(email_id, email_pwd, module_logger)
+
     if ans:
-        for i in range(1000, 1006):
-            send_test_message(i, email_id, email_pwd, module_logger)
+        print('check credentials for [{0}] / [{1}] PASSED'.format(email_id, email_pwd))
+        # for i in range(1003, 1008):
+        #     send_test_message(i, email_id, email_pwd, module_logger)
 
         # unread_msg = read_latest_unread_inbox()
         # if len(unread_msg) > 0:
@@ -80,32 +107,35 @@ def main():
         # else:
         #     print('No unread messages')
 
-        # test_dt = datetime.date(2018, 3, 27)
-        # msgs = read_after_date(test_dt, email_id, email_pwd)
-        # for m1 in msgs:
-        #     # only look at messages with the word 'failed' in the subject line
-        #     if 'failed' in m1.mail_subject.lower():
-        #         # must also have Job # (up to 10 digits)
-        #         # regex = '^Test Job d{0,10}.*$'
-        #
-        #         # if re.match(regex, m1.mail_subject):
-        #         if True:
-        #             # convert message date/time to UTC
-        #             msg_dt = convert_to_date(m1.mail_datetime)
-        #             print(50*'=')
-        #             print(' Subject:', m1.mail_subject)
-        #
-        #             print('    From:', m1.mail_from)
-        #             print('      To:', m1.mail_to)
-        #             print('    Date:', m1.mail_datetime)
-        #             print('Lcl Date:', msg_dt)
-        #             print(80 * '=')
-        #             print('message body:', type(m1.mail_body))
-        #             print(m1.mail_body)
-        #             print(80*'=')
+        # list_mbx(email_id, email_pwd, module_logger)
+        test_uid(email_id, email_pwd, module_logger)
+
+        test_dt = datetime.date(2018, 4, 5)
+        msgs = read_after_date(test_dt, email_id, email_pwd, module_logger)
+        for m1 in msgs:
+            # only look at messages with the word 'failed' in the subject line
+            if 'failed' in m1.mail_subject.lower():
+                # must also have Job # (up to 10 digits)
+                # regex = '^Job d{0,10}.*$'
+
+                # if re.match(regex, m1.mail_subject):
+                if True:
+                    # convert message date/time to UTC
+                    msg_dt = convert_to_date(m1.mail_datetime)
+                    print(50*'=')
+                    print(' Subject:', m1.mail_subject)
+
+                    print('    From:', m1.mail_from)
+                    print('      To:', m1.mail_to)
+                    print('    Date:', m1.mail_datetime)
+                    print('Lcl Date:', msg_dt)
+                    print(80 * '=')
+                    print('message body:', type(m1.mail_body))
+                    print(m1.mail_body)
+                    print(80*'=')
 
     else:
-        print('Credential check failed!')
+        print('check credentials for [{0}] / [{1}] FAILED'.format(email_id, email_pwd))
     module_logger.info('===== Done =====')
 
 
@@ -155,7 +185,7 @@ def read_latest_unread_junk(email_id, email_pwd, module_logger):
 def send_test_message(job_num, email_id, email_pwd, module_logger):
     # To send Message :
 
-    msg_recipient = 'byte_ic@outlook.com'
+    msg_recipient = 'byte_ic@galaxy-usa.com'
     msg_subject = 'Job {job_num} - Job Name {job_num} - Failed'.format(job_num=job_num)
     body_hdr = '{0}\n\n{1}\n\n'.format(msg_subject, 80*'=')
     msg_body = body_hdr\
@@ -190,6 +220,19 @@ def start_logger(p_logger):
     p_logger.addHandler(fh)
     p_logger.addHandler(ch)
 
+
+def test_uid(email_id, email_pwd, module_logger):
+
+    mail = outlook.Outlook(module_logger)
+    mail.login(email_id, email_pwd)
+    mail.inbox()
+    typ, data = mail.get_uids()
+    print('test_uid: Response code:', typ)
+    print('test_uid: Response:', data)
+
+    unread_list = mail.unread_ids()
+    print('test_uid: unread_list', unread_list)
+    return True
 
 if __name__ == '__main__':
     main()

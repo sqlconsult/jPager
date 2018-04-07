@@ -1,6 +1,6 @@
 alert_id,dept_name,job_name,user_name,email_subject,email_from,email_to,sla_time,response_order,job_failure_dt,notification_dt,response_dt
-1,IT,Test Job 1000,IndividualContributor,Test Job 1000 Failed,byte_maint@outlook.com,byte_ic@outlook.com,15,1,04/04/18 09:59:23 AM,04/04/18 10:00:23 AM,
-2,IT,Test Job 1000,Manager,Test Job 1000 Failed,byte_maint@outlook.com,byte_mgr@outlookcom,15,2,04/04/18 09:59:23 AM,04/04/18 10:15:23 AM,
-3,IT,Test Job 1001,IndividualContributor,Test Job 1001 Failed,byte_maint@outlook.com,byte_ic@outlook.com,75,1,04/04/18 10:19:23 AM,04/04/18 10:20:23 AM,
-4,IT,Test Job 1000,Director,Test Job 1000 Failed,byte_maint@outlook.com,byte_dir@outlook.com,15,3,04/04/18 09:59:23 AM,04/04/18 10:30:23 AM,
-5,IT,Test Job 1001,IndividualContributor,Test Job 1001 Failed,byte_ic@outlook.com,byte_maint@outlook.com,75,1,04/04/18 10:19:23 AM,04/04/18 10:20:23 AM,04/04/18 10:45:23 AM
+1,IT,Test Job 1000,IndividualContributor,Test Job 1000 Failed,byte_maint@galaxy-usa.com,byte_ic@galaxy-usa.com,15,1,04/06/18 09:59:23 AM,04/06/18 10:00:23 AM,
+2,IT,Test Job 1000,Manager,Test Job 1000 Failed,byte_maint@galaxy-usa.com,byte_mgr@galaxy-usa.com,15,2,04/06/18 09:59:23 AM,04/06/18 10:15:23 AM,
+3,IT,Test Job 1001,IndividualContributor,Test Job 1001 Failed,byte_maint@galaxy-usa.com,byte_ic@galaxy-usa.com,75,1,04/06/18 10:19:23 AM,04/06/18 10:20:23 AM,
+4,IT,Test Job 1000,Director,Test Job 1000 Failed,byte_maint@galaxy-usa.com,byte_dir@galaxy-usa.com,15,3,04/06/18 09:59:23 AM,04/06/18 10:30:23 AM,
+5,IT,Test Job 1001,IndividualContributor,Test Job 1001 Failed,byte_ic@galaxy-usa.com,byte_maint@galaxy-usa.com,75,1,04/06/18 10:19:23 AM,04/06/18 10:20:23 AM,04/06/18 10:45:23 AM

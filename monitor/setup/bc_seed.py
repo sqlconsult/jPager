@@ -8,6 +8,7 @@ import json
 import logging
 import os
 import pprint
+import pymongo
 # from uuid import uuid4     # used to mine a block
 
 dt_fmt_str = '{dt:%Y-%m-%d %H:%M:%S}'
@@ -168,11 +169,39 @@ def full_chain(block_chain):
     return response
 
 
+def import_ref_data(inp_file_path, params, module_logger):
+    # connect to mongodb on digital ocean droplet
+    ref_db_name = params[0]['Mongo']['ref_db_name']
+    client = open_connection(params, ref_db_name)
+
+    # clear jPager reference database
+    db = client[ref_db_name]
+    result = db[ref_db_name].delete_many({})
+    del_count = result.deleted_count
+    module_logger.info('Seed: {0} rows deleted from {1}'.format(del_count, ref_db_name))
+
+    # populate jPager reference database
+    with open(inp_file_path) as f:
+        reader = csv.DictReader(f)
+        rows = list(reader)
+        # print(80*'=')
+        # print(rows)
+        # print(80*'=')
+        db[ref_db_name].insert_many(rows)
+        ins_count = db[ref_db_name].count()
+        module_logger.info('Seed.import_ref_data: {0} ref data rows inserted from {1}'.
+                           format(ins_count, inp_file_path))
+
+    client.close()
+
+    return True
+
+
 def main():
     # Instantiate json pretty printer
     pp = pprint.PrettyPrinter(indent=4)
 
-    # Start logger
+    # Instantiate & start logger
     app_name = __file__.split('.')[0]
     logger = logging.getLogger(app_name)
     logger.setLevel(logging.DEBUG)
@@ -184,6 +213,9 @@ def main():
     module_logger.info('Read json parameters')
     with open('../params.json', 'r') as handle:
         json_params = json.load(handle)
+
+    # import reference data from csv
+    import_ref_data('RefData.csv', json_params, module_logger)
 
     # pp.pprint(json_params)
 
@@ -200,7 +232,7 @@ def main():
     test_xcns = read_test_transactions('Alerts.csv')
     module_logger.info('Read {0} test transactions'.format(len(test_xcns)))
 
-    # Instantiate our Block chain including a genesis block
+    # Instantiate block chain including a genesis block
     block_chain = BlockChain(json_params)
 
     # response = {
@@ -309,6 +341,20 @@ def mine(block_chain, node_identifier, module_logger):
         'previous_hash': block['previous_hash'],
     }
     return response, 200
+
+
+def open_connection(params, db_name):
+    # connect to MongoDb
+    conn_str = 'mongodb://{user_name}:{password}@{ip_address}:{port}/{db_name}'.\
+        format(user_name=params[0]['Mongo']['user_name'],
+               password=params[0]['Mongo']['password'],
+               ip_address=params[0]['Mongo']['ip_address'],
+               port=params[0]['Mongo']['port'],
+               db_name=db_name)
+    print('Connection string:', conn_str)
+    # client = pymongo.MongoClient('mongodb://test_admin:admin@159.203.74.232:27017/test')
+    client = pymongo.MongoClient(conn_str)
+    return client
 
 
 def read_test_transactions(inp_file_path):

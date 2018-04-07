@@ -29,7 +29,7 @@ def main():
     email_id = json_params[0]['MailBoxToMonitor']
     email_pwd = json_params[0]['MailBoxPassword']
 
-    mail_x = galaxy.MailClass('mail.galaxy.net', email_id, email_pwd, module_logger)
+    mail_x = galaxy.MailClass('mail.galaxy.net', email_id, email_pwd)
     mail_x.login()
 
     # for i in range(1009, 1012):

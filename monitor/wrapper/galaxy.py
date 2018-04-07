@@ -5,14 +5,12 @@ import email
 import imaplib
 import smtplib
 
-import datetime
-import logging
 
 class MailClass:
-    def __init__(self, mail_server, user_name, user_pwd, module_logger):
+    def __init__(self, mail_server, user_name, user_pwd):
         self.user_name = user_name
         self.user_pwd = user_pwd
-        self.module_logger = module_logger
+        # self.module_logger = module_logger
         self.imap_server = "mail.galaxy.net"
         self.imap_port = 993
         self.smtp_server = "mail.galaxy.net"
@@ -23,20 +21,22 @@ class MailClass:
         num_try = 1
         max_try = 5
         success = False
-        while not success and num_try < max_try:
-            success = self.init_mail(mail_server)
-            result = 'Successful' if success else 'Failed'
-            msg = 'MailClass.init: Login attempt {0} of {1} - {2}'.format(num_try, max_try, result)
-            module_logger.info(msg)
+        while not success and num_try <= max_try:
+            success, mail_svr = self.init_mail(mail_server)
+            if success:
+                self.mail_svr = mail_svr
+            # result = 'Successful' if success else 'Failed'
+            # msg = 'MailClass.init: Login attempt {0} of {1} - {2}'.format(num_try, max_try, result)
+            # module_logger.info(msg)
             num_try += 1
 
     def init_mail(self, mail_server):
         # self.mail = imaplib.IMAP4_SSL('mail.galaxy.net')
         try:
-            self.mail_svr = imaplib.IMAP4_SSL(mail_server)
-            return True
+            mail_svr = imaplib.IMAP4_SSL(mail_server)
+            return True, mail_svr
         except:
-            return False
+            return False, None
 
     def get_email(self, msg_id):
         self.mail_svr.select("inbox")  # connect to inbox.
@@ -184,18 +184,19 @@ class MailClass:
                 self.module_logger.error('outlook.send_email: Failed sending message {0}'.format(recipient))
                 return False
 
+
 def main():
 
     # Start logger
-    app_name = __file__.split('.')[0]
-    logger = logging.getLogger(app_name)
-    logger.setLevel(logging.DEBUG)
-    start_logger(logger)
-    module_logger = logging.getLogger('{app_name}.main'.format(app_name=app_name))
+    # app_name = __file__.split('.')[0]
+    # logger = logging.getLogger(app_name)
+    # logger.setLevel(logging.DEBUG)
+    # start_logger(logger)
+    # module_logger = logging.getLogger('{app_name}.main'.format(app_name=app_name))
 
     email_id = 'byte_ic@galaxy-usa.com'
     email_pwd = 'rQ64sb#8'
-    mail_x = MailClass('mail.galaxy.net', email_id, email_pwd, module_logger)
+    mail_x = MailClass('mail.galaxy.net', email_id, email_pwd)
     mail_x.login()
 
     # for i in range(1009, 1012):
@@ -207,26 +208,26 @@ def main():
     mail_x.logout()
 
 
-def start_logger(p_logger):
-    # Create file handler which logs debug messages
-    log_fil_nm = 'log_{date:%Y%m%d_%H%M%S}.log'.format(date=datetime.datetime.now())
-    fh = logging.FileHandler(log_fil_nm)
-    fh.setLevel(logging.DEBUG)
-
-    # Create console handler with a higher log level, error
-    ch = logging.StreamHandler()
-    ch.setLevel(logging.ERROR)
-
-    # Create formatter and add it to the handlers
-    formatter = logging.Formatter('%(asctime)s.%(msecs)03d - %(name)s - %(levelname)s - %(message)s',
-                                  datefmt='%Y-%m-%d %H:%M:%S')
-    fh.setFormatter(formatter)
-    ch.setFormatter(formatter)
-
-    # add the handlers to the logger
-    p_logger.addHandler(fh)
-    p_logger.addHandler(ch)
-
+# def start_logger(p_logger):
+#     # Create file handler which logs debug messages
+#     log_fil_nm = 'log_{date:%Y%m%d_%H%M%S}.log'.format(date=datetime.datetime.now())
+#     fh = logging.FileHandler(log_fil_nm)
+#     fh.setLevel(logging.DEBUG)
+#
+#     # Create console handler with a higher log level, error
+#     ch = logging.StreamHandler()
+#     ch.setLevel(logging.ERROR)
+#
+#     # Create formatter and add it to the handlers
+#     formatter = logging.Formatter('%(asctime)s.%(msecs)03d - %(name)s - %(levelname)s - %(message)s',
+#                                   datefmt='%Y-%m-%d %H:%M:%S')
+#     fh.setFormatter(formatter)
+#     ch.setFormatter(formatter)
+#
+#     # add the handlers to the logger
+#     p_logger.addHandler(fh)
+#     p_logger.addHandler(ch)
+#
 
 if __name__ == '__main__':
     main()
